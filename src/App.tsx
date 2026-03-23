@@ -1,26 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import type { ReactElement } from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Toast from "./components/Toast";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Contact from "./pages/Contact";
+import BookRequest from "./pages/BookRequest";
+import EventFeedback from "./pages/EventFeedBack";
 
-function App() {
+type Page = "Home" | "About" | "Services" | "Contact" | "Book Request" | "Event Feedback";
+
+export default function App() {
+  const [active, setActive] = useState<Page>("Home");
+  const [toast, setToast] = useState<string | null>(null);
+
+  const showToast = (msg: string): void => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 3500);
+  };
+
+  const renderPage = (): ReactElement => {
+    switch (active) {
+      case "Home":           return <Home setActive={setActive} />;
+      case "About":          return <About />;
+      case "Services":       return <Services />;
+      case "Contact":        return <Contact showToast={showToast} />;
+      case "Book Request":   return <BookRequest showToast={showToast} />;
+      case "Event Feedback": return <EventFeedback />;
+      default:               return <Home setActive={setActive} />;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#fff", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
+      <Navbar active={active} setActive={setActive} />
+      <main style={{ flex: 1 }}>
+        {renderPage()}
+      </main>
+      <Footer />
+      <Toast message={toast} />
     </div>
   );
 }
-
-export default App;
