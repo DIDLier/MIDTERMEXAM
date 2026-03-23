@@ -1,39 +1,66 @@
 interface ContactProps {
-    showToast: (msg: string) => void;
-  }
-  
-  interface ContactInfo {
-    label: string;
-    value: string;
-  }
-  
-  const info: ContactInfo[] = [
-    { label: "Office Location", value: "F309" },
-    { label: "Email",           value: "MSI@e.ubaguio.edu" },
-    { label: "Phone",           value: "0923118732" },
-    { label: "Office Hours",    value: "Mon–Fri, 8:00 AM – 5:00 PM" },
-  ];
-  
-  const inputStyle: React.CSSProperties = {
-    width: "100%", background: "#fff", border: "1px solid #e5e7eb",
-    borderRadius: "8px", padding: "0.65rem 0.9rem", fontSize: "0.9rem",
-    fontFamily: "inherit", outline: "none", boxSizing: "border-box", display: "block",
-  };
-  
-  const labelStyle: React.CSSProperties = {
-    display: "block", fontSize: "0.72rem", fontWeight: 600,
-    letterSpacing: "0.08em", textTransform: "uppercase", color: "#6b7280", marginBottom: "0.4rem",
-  };
-  
-  export default function Contact({ showToast }: ContactProps) {
-    return (
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "4rem 2rem" }}>
-        <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6b7280", marginBottom: "0.5rem" }}>
-          Get in Touch
-        </p>
-        <h1 style={{ fontSize: "2.4rem", fontWeight: 700, letterSpacing: "-0.02em", marginBottom: "0.75rem" }}>Contact Us</h1>
-        <p style={{ fontSize: "1rem", color: "#6b7280", lineHeight: 1.7, fontWeight: 300, maxWidth: 520, marginBottom: "2.5rem" }}>
-          Have questions? Reach out to the student services team and we'll get back to you promptly.
+  showToast: (msg: string) => void;
+}
+
+export default function Contact({ showToast }: ContactProps) {
+  return (
+    <div className="container py-5">
+
+      <h2 className="mb-2">Contact Us</h2>
+      <p className="text-muted mb-4">
+        Reach out to the student services team and we will get back to you.
+      </p>
+
+      <hr />
+
+      <div className="row g-4 mt-2">
+
+        {/* Info */}
+        <div className="col-md-4">
+          <h5 className="mb-3">Office Information</h5>
+          <ul className="list-unstyled text-muted">
+            <li className="mb-2"><strong>Location:</strong> Admin Building, Room 101</li>
+            <li className="mb-2"><strong>Email:</strong> students@portal.edu</li>
+            <li className="mb-2"><strong>Phone:</strong> +63 74 123 4567</li>
+            <li className="mb-2"><strong>Hours:</strong> Mon–Fri, 8:00 AM – 5:00 PM</li>
+          </ul>
+        </div>
+
+        {/* Form */}
+        <div className="col-md-8">
+          <h5 className="mb-3">Send a Message</h5>
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label className="form-label">Name</label>
+              <input type="text" className="form-control" placeholder="Juan dela Cruz" />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Email</label>
+              <input type="email" className="form-control" placeholder="juan@school.edu" />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Subject</label>
+              <input type="text" className="form-control" placeholder="Your subject" />
+            </div>
+            <div className="col-12">
+              <label className="form-label">Message</label>
+              <textarea className="form-control" rows={4} placeholder="Write your message here..." />
+            </div>
+            <div className="col-12">
+              <button
+                className="btn btn-dark"
+                onClick={() => showToast("Message sent! We will reply within 24 hours.")}
+              >
+                Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
         </p>
   
         <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "2.5rem" }}>
