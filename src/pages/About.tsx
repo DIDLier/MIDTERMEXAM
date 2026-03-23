@@ -23,11 +23,9 @@ export default function About() {
         <div className="col-md-6">
           <h5>Core Values</h5>
           <ul className="text-muted ps-3">
-            <li>Accessibility for all students</li>
-            <li>Transparency in processes</li>
-            <li>Continuous improvement</li>
-            <li>Student-centered design</li>
-            <li>Data privacy and security</li>
+            <li>Competence: A commitment to nurturing excellent and highly skilled professionals</li>
+            <li>Integrity: A commitment to cultivating a community with strong ethical and moral values.</li>
+            <li>Service: A dedication to building a community that advocates for sustainable programs for society and the environment. </li>
           </ul>
         </div>
 
@@ -35,8 +33,7 @@ export default function About() {
           <div className="border rounded p-4 bg-light">
             <h5>Our Mission</h5>
             <p className="text-muted mb-0">
-              To empower every student with easy access to institutional services and support their
-              academic success at every step.
+              To educates individuals to be empowered professionals in a global community
             </p>
           </div>
         </div>

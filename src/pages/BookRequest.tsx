@@ -6,24 +6,20 @@ interface BookForm {
   email: string;
   bookTitle: string;
   author: string;
-  isbn: string;
   purpose: string;
   date: string;
   notes: string;
 }
 
-interface BookRequestProps {
-  showToast: (msg: string) => void;
-}
-
 const EMPTY: BookForm = {
   studentId: "", name: "", email: "",
-  bookTitle: "", author: "", isbn: "",
+  bookTitle: "", author: "",
   purpose: "", date: "", notes: "",
 };
 
-export default function BookRequest({ showToast }: BookRequestProps) {
+export default function BookRequest() {
   const [form, setForm] = useState<BookForm>(EMPTY);
+  const [submittedData, setSubmittedData] = useState<BookForm | null>(null);
 
   const handle = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -33,10 +29,12 @@ export default function BookRequest({ showToast }: BookRequestProps) {
 
   const submit = (): void => {
     if (!form.studentId || !form.bookTitle) {
-      showToast("Please fill in Student ID and Book Title.");
+      alert("Please fill in Student ID and Book Title.");
       return;
     }
-    showToast("Book request submitted successfully!");
+    
+    setSubmittedData(form);
+    alert("Book request submitted successfully!");
     setForm(EMPTY);
   };
 
@@ -52,15 +50,13 @@ export default function BookRequest({ showToast }: BookRequestProps) {
 
       <div className="row g-4 mt-2">
 
-        {/* Form */}
-        <div className="col-md-7">
+        <div className="col-md-12">
           <h5 className="mb-3">Request Form</h5>
-
           <div className="row g-3">
             <div className="col-md-6">
               <label className="form-label">Student ID <span className="text-danger">*</span></label>
               <input name="studentId" value={form.studentId} onChange={handle}
-                className="form-control" placeholder="2024-00123" />
+                className="form-control" placeholder="20201234" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Full Name</label>
@@ -70,22 +66,17 @@ export default function BookRequest({ showToast }: BookRequestProps) {
             <div className="col-12">
               <label className="form-label">Email</label>
               <input name="email" type="email" value={form.email} onChange={handle}
-                className="form-control" placeholder="juan@school.edu" />
+                className="form-control" placeholder="juan@s.school.edu" />
             </div>
             <div className="col-12">
               <label className="form-label">Book Title <span className="text-danger">*</span></label>
               <input name="bookTitle" value={form.bookTitle} onChange={handle}
-                className="form-control" placeholder="Introduction to Algorithms" />
+                className="form-control" placeholder="Mein Kampf" />
             </div>
             <div className="col-md-6">
               <label className="form-label">Author</label>
               <input name="author" value={form.author} onChange={handle}
                 className="form-control" placeholder="Thomas H. Cormen" />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">ISBN</label>
-              <input name="isbn" value={form.isbn} onChange={handle}
-                className="form-control" placeholder="978-0262033848" />
             </div>
             <div className="col-12">
               <label className="form-label">Purpose</label>
@@ -115,25 +106,26 @@ export default function BookRequest({ showToast }: BookRequestProps) {
           </div>
         </div>
 
-        {/* Live Preview */}
-        <div className="col-md-5">
-          <h5 className="mb-3">Preview</h5>
+      </div>
+
+      {submittedData && (
+        <div className="mt-5">
+          <h5 className="mb-3">Recently Submitted Request</h5>
           <div className="border rounded p-3 bg-light">
             <table className="table table-sm table-borderless mb-0">
               <tbody>
                 {[
-                  ["Student ID",   form.studentId],
-                  ["Full Name",    form.name],
-                  ["Email",        form.email],
-                  ["Book Title",   form.bookTitle],
-                  ["Author",       form.author],
-                  ["ISBN",         form.isbn],
-                  ["Purpose",      form.purpose],
-                  ["Pickup Date",  form.date],
-                  ["Notes",        form.notes],
+                  ["Student ID", submittedData.studentId],
+                  ["Full Name", submittedData.name],
+                  ["Email", submittedData.email],
+                  ["Book Title", submittedData.bookTitle],
+                  ["Author", submittedData.author],
+                  ["Purpose", submittedData.purpose],
+                  ["Pickup Date", submittedData.date],
+                  ["Notes", submittedData.notes],
                 ].map(([label, val], i) => (
                   <tr key={i}>
-                    <td className="text-muted small fw-semibold" style={{ width: "40%" }}>{label}</td>
+                    <td className="text-muted small fw-semibold" style={{ width: "30%" }}>{label}</td>
                     <td className="small">{val || <span className="text-muted fst-italic">—</span>}</td>
                   </tr>
                 ))}
@@ -141,8 +133,8 @@ export default function BookRequest({ showToast }: BookRequestProps) {
             </table>
           </div>
         </div>
+      )}
 
-      </div>
     </div>
   );
 }
